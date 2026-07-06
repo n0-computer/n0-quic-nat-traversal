@@ -4,16 +4,18 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
-<meta content="Your Name Here" name="author">
+<title>n0 QUIC NAT Traversal</title>
+<meta content="Floris Bruynooghe" name="author">
 <meta content="
-       TODO Abstract 
+       A description of how  noq  performs NAT traversal for  iroh ,
+including all current bugs.
+This is not yet a specification, though further revisions migth be. 
     " name="description">
 <meta content="xml2rfc 3.34.0" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="QUIC" name="keyword">
+<meta content="NAT Traversal" name="keyword">
+<meta content="hole punching" name="keyword">
+<meta content="draft-bruynooghe-n0-quic-nat-traversal-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.34.0
     Python 3.14.5
@@ -29,7 +31,7 @@
     requests 2.33.1
     wcwidth 0.8.2
 -->
-<link href="draft-todo-yourname-protocol.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-bruynooghe-n0-quic-nat-traversal.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1045,12 +1047,12 @@ svg {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">n0 QNT</td>
 <td class="right">July 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
-<td class="center">Expires 6 January 2027</td>
+<td class="left">Bruynooghe</td>
+<td class="center">Expires 7 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1058,45 +1060,32 @@ svg {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">QUIC</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-bruynooghe-n0-quic-nat-traversal-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-05" class="published">5 July 2026</time>
+<time datetime="2026-07-06" class="published">6 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-06">6 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-07">7 January 2027</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">F. Bruynooghe</div>
+<div class="org">n0 Inc.</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">n0 QUIC NAT Traversal</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-</section>
-<section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-about-this-document">
-<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
-      </h2>
-<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">
-        Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
-<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">A description of how <a href="https://github.com/n0-computer/noq">noq</a> performs NAT traversal for <a href="https://github.com/n0-computer/iroh">iroh</a>,
+including all current bugs.
+This is not yet a specification, though further revisions migth be.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1117,7 +1106,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1153,19 +1142,64 @@ svg {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-nat-traversal" class="internal xref">NAT Traversal</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-establishing-a-connection" class="internal xref">Establishing a connection</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-gathering-address-candidate" class="internal xref">Gathering address candidates</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-negotiating-extension-use" class="internal xref">Negotiating Extension use</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-exchanging-address-candidat" class="internal xref">Exchanging address candidates</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-initiating-nat-traversal" class="internal xref">Initiating NAT traversal</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.1">
+                    <p id="section-toc.1-1.3.2.5.2.1.1"><a href="#section-3.5.1" class="auto internal xref">3.5.1</a>.  <a href="#name-nat-probes" class="internal xref">NAT probes</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.2">
+                    <p id="section-toc.1-1.3.2.5.2.2.1"><a href="#section-3.5.2" class="auto internal xref">3.5.2</a>.  <a href="#name-probe-responses" class="internal xref">Probe responses</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.3">
+                    <p id="section-toc.1-1.3.2.5.2.3.1"><a href="#section-3.5.3" class="auto internal xref">3.5.3</a>.  <a href="#name-successful-nat-traversal" class="internal xref">Successful NAT traversal</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-frames" class="internal xref">Frames</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-add_address" class="internal xref">ADD_ADDRESS</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-remove_address" class="internal xref">REMOVE_ADDRESS</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-reach_out" class="internal xref">REACH_OUT</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1176,7 +1210,15 @@ svg {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">This document describes how <a href="https://github.com/n0-computer/noq">noq</a> currently performs NAT traversal using a QUIC extension.
+It is based on <span>[<a href="#SEEMANN-QNT" class="cite xref">SEEMANN-QNT</a>]</span>, but with heavy modifications.
+This is not expected to be the final shape of the protocol, and does not aim to be a specification.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The NAT traversal described here functions as a QUIC extension which needs to be negotiated in the transport parameters.
+Once negotiated the server can share NAT traversal address candidates using ADD_ADDRESS frames.
+NAT traversal is initiated by the client using REACH_OUT frames,
+and performed using <span>[<a href="#QUIC-TRANSPORT" class="cite xref">QUIC-TRANSPORT</a>]</span> PATH_CHALLEGE and PATH_RESPONSE frames in probing packets to achieve NAT traversal.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">The current implementation is combined with <span>[<a href="#QUIC-ADDR-DISCOVERY" class="cite xref">QUIC-ADDR-DISCOVERY</a>]</span> for gathering address candidates and <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> for opening multiple paths concurrently,
+however these mechanisms are somewhat orthogonal and not not require tight integration.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1190,35 +1232,324 @@ described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</s
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="security-considerations">
+<div id="nat-traversal">
 <section id="section-3">
-      <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      <h2 id="name-nat-traversal">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-nat-traversal" class="section-name selfRef">NAT Traversal</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="establishing-a-connection">
+<section id="section-3.1">
+        <h3 id="name-establishing-a-connection">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-establishing-a-connection" class="section-name selfRef">Establishing a connection</a>
+        </h3>
+<p id="section-3.1-1">Both endpoints are expected to be able to establish a QUIC connection already.
+This is done via a "relay" path, the transport of this is out of scope.
+However in iroh this looks like a normal IP path that uses IPv6 Unique Local Addresses as far as the QUIC stack is concerned.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Once the connection is established with the extension negotiated the endpoints can perform NAT traversal.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="gathering-address-candidates">
+<section id="section-3.2">
+        <h3 id="name-gathering-address-candidate">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-gathering-address-candidate" class="section-name selfRef">Gathering address candidates</a>
+        </h3>
+<p id="section-3.2-1">Both endpoints need to gather address candidates to participate in the holepunching from the same UDP socket that takes part in the holepunching.
+This is done using <span>[<a href="#QUIC-ADDR-DISCOVERY" class="cite xref">QUIC-ADDR-DISCOVERY</a>]</span> using a sparate connection to a cooperating server.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">The discovered addresses are propagated up to the application,
+which has full control over which ones it decides to use for NAT traversal by passing any desired address candidates into the QUIC stack as NAT traversal address candidates.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="negotiation">
+<section id="section-3.3">
+        <h3 id="name-negotiating-extension-use">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-negotiating-extension-use" class="section-name selfRef">Negotiating Extension use</a>
+        </h3>
+<p id="section-3.3-1">Endpoints advertise their support of the extension by sending the max_remote_nat_traversal_addresses (0x3d7f91120401) set to a non-zero variable-length integer.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">The value advertised by the server is not used by the client.
+It is only used by the server itself to limit the number of address candidates the application is allowed to use.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-3">The value sent by the client limits the number of address candidates the server can advertise to the client at any given time.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="exchanging-address-candidates">
+<section id="section-3.4">
+        <h3 id="name-exchanging-address-candidat">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-exchanging-address-candidat" class="section-name selfRef">Exchanging address candidates</a>
+        </h3>
+<p id="section-3.4-1">The server advertises address candidates using ADD_ADDRESS frames.
+Any address candidates advertised by the server that exceed the allowed number the client advertised in the transport parameter,
+are ignored by the client.
+Each ADD_ADDRESS frame uses a unique and monotonically incrementing sequence ID.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">If the server wants to remove an address candidate from the set of address candidates the client can use,
+it uses the REMOVE_ADDRESS frame using a sequence ID of a previously sent ADD_ADDRESS frame.
+The client ignores an unknown sequence ID in any REMOVE_ADDRESS frames.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-3">If the server receives an ADD_ADDRESS or REMOVE_ADDRESS frame it closes the connection with the PROTOCOL_VIOLATION transport error.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="initiating-nat-traversal">
+<section id="section-3.5">
+        <h3 id="name-initiating-nat-traversal">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-initiating-nat-traversal" class="section-name selfRef">Initiating NAT traversal</a>
+        </h3>
+<p id="section-3.5-1">The client initiates NAT traversal by sending one or more REACH_OUT frames,
+each containing one of the client's address candidates.
+At the same time the client sends out probes to all the address candidates the server advertised.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-2">Upon receipt of a REACH_OUT frame the server also sends out a probe to the client's address candidate advertised in the frame.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
+<p id="section-3.5-3">NAT traversal happens in rounds, each round has a sequence ID.
+The receipt of a higher sequence ID than the current round implies the termination of the previous round.
+This means that any probes which have not yet had a response will no longer be retried.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.5-4">If the server sends a REACH_OUT frame the client closes the connection with the PROTOCOL_VIOLATION transport error.<a href="#section-3.5-4" class="pilcrow">¶</a></p>
+<div id="nat-probes">
+<section id="section-3.5.1">
+          <h4 id="name-nat-probes">
+<a href="#section-3.5.1" class="section-number selfRef">3.5.1. </a><a href="#name-nat-probes" class="section-name selfRef">NAT probes</a>
+          </h4>
+<p id="section-3.5.1-1">NAT probes are valid QUIC packets containing a PATH_CHALLENGE frame,
+sent off-path to the address candidate provided by the remote endpoint.
+They are treated as in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-8.2.1" class="relref">Section 8.2.1</a> of [<a href="#QUIC-TRANSPORT" class="cite xref">QUIC-TRANSPORT</a>]</span>,
+except they are not padded to 1200 bytes.
+As a result any valid PATH_RESPONSE received for such a challenge does not validate the path.<a href="#section-3.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.1-2">Such NAT probes are treated as <em>probing frames</em> as defined in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-9.1" class="relref">Section 9.1</a> of [<a href="#QUIC-TRANSPORT" class="cite xref">QUIC-TRANSPORT</a>]</span>.
+Since this extension is used together with <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> this re-introduces the concept of probing frames even when <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> is negotiated.<a href="#section-3.5.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.5.1-3">Currently these NAT probes are sent using the active CID of the <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> PathId they are sent on,
+in clear violation of <span><a href="https://rfc-editor.org/rfc/rfc9000#section-9.5" class="relref">Section 9.5</a> of [<a href="#QUIC-TRANSPORT" class="cite xref">QUIC-TRANSPORT</a>]</span>.<a href="#section-3.5.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.5.1-4">Since PATH_CHALLENGE frames are not retransmittable the sending endpoint has to re-send NAT probes if it does not receive a timely response.
+For this the normal PTO duration calculation is used,
+using the initial RTT for new paths and using no ack-delay since PATH_RESPONSES must be sent immediately.
+The exponent of the exponential backoff is the retry count of the probe.
+Finally NAT probes are abandoned once a new round is started, or a fixed timeout of 30s elapsed.<a href="#section-3.5.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.5.1-5">Once a successful response is received from a remote address probing of that remote address stops,
+even if there are still other un-responded challenges to the same remote address.<a href="#section-3.5.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.5.1-6">In combination with <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> an acknowledgement for the NAT probe migth be received over another path,
+even if no matching PATH_RESPONSE is received.
+These acknowledgements do not influence the sending of new challenges when no timely response is received.<a href="#section-3.5.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="probe-responses">
+<section id="section-3.5.2">
+          <h4 id="name-probe-responses">
+<a href="#section-3.5.2" class="section-number selfRef">3.5.2. </a><a href="#name-probe-responses" class="section-name selfRef">Probe responses</a>
+          </h4>
+<p id="section-3.5.2-1">Upon receiving an off-path probing packet containing a PATH_CHALLENGE,
+the receiving endpoint handles this as any other path validation or liveness probe response as specified in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-8.2.2" class="relref">Section 8.2.2</a> of [<a href="#QUIC-TRANSPORT" class="cite xref">QUIC-TRANSPORT</a>]</span>.
+Since the receiving endpoint does not know the reason for this path challenge it always expands the packet to the 1200 byte limit required for path validation.<a href="#section-3.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.2-2">When the client receives an off-path PATH_CHALLENGE it always includes a new PATH_CHALLENGE together with the PATH_RESPONSE it must send, turning the response into a new NAT probe.
+This has two benefits:<a href="#section-3.5.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5.2-3.1">
+              <p id="section-3.5.2-3.1.1">It speeds up opening of new paths,
+since as per <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> only the client can open a new path a successful NAT traversal can only be acted upon by the client.
+Sending a new challenge before the next challenge retry would occur is faster.<a href="#section-3.5.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.5.2-3.2">
+              <p id="section-3.5.2-3.2.1">It enables NAT traversal even for challenges received from addresses not advertised as address candidates by the server.
+This can occur when the server is behind an Endpoint Dependent Mapping NAT,
+while the client is behind an Endpoint Independent Mapping NAT.<a href="#section-3.5.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="successful-nat-traversal">
+<section id="section-3.5.3">
+          <h4 id="name-successful-nat-traversal">
+<a href="#section-3.5.3" class="section-number selfRef">3.5.3. </a><a href="#name-successful-nat-traversal" class="section-name selfRef">Successful NAT traversal</a>
+          </h4>
+<p id="section-3.5.3-1">Once the client receives a PATH_RESPONSE for a NAT probe it sent,
+NAT traversal is successful.<a href="#section-3.5.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.3-2">The client now opens a new path using <span>[<a href="#QUIC-MULTIPATH" class="cite xref">QUIC-MULTIPATH</a>]</span> over the path.
+It does however stil have to validate the path before it can use it,
+since only the address is validated as part of the NAT traversal.<a href="#section-3.5.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="frames">
+<section id="section-4">
+      <h2 id="name-frames">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-frames" class="section-name selfRef">Frames</a>
+      </h2>
+<p id="section-4-1">Receipt of any frame while the extension is not negotiated results in closing the connection with a PROTOCOL_VIOLATION transport error.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="addaddress">
+<section id="section-4.1">
+        <h3 id="name-add_address">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-add_address" class="section-name selfRef">ADD_ADDRESS</a>
+        </h3>
+<p id="section-4.1-1">As per <span>[<a href="#SEEMANN-QNT" class="cite xref">SEEMANN-QNT</a>]</span>, but with different codepoints:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.1-2">
+<pre>
+ADD_ADDRESS Frame {
+    Type (i) = 0x3d7f90..0x3d7f91,
+    Sequence Number (i),
+    [ IPv4 (32) ],
+    [ IPv6 (128) ],
+    Port (16),
+}
+</pre><a href="#section-4.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-4.1-3">The ADD_ADDRESS frame contains the following fields:<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.1-4">
+          <dt id="section-4.1-4.1">Sequence Number:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.2">
+            <p id="section-4.1-4.2.1">A variable-length integer encoding the sequence number of this address
+ advertisement.<a href="#section-4.1-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-4.3">IPv4:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.4">
+            <p id="section-4.1-4.4.1">The IPv4 address. Only present if the least significant bit of the frame type
+ is 0.<a href="#section-4.1-4.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-4.5">IPv6:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.6">
+            <p id="section-4.1-4.6.1">The IPv6 address. Only present if the least significant bit of the frame type
+ is 1.<a href="#section-4.1-4.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-4.7">Port:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-4.8">
+            <p id="section-4.1-4.8.1">The port number.<a href="#section-4.1-4.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-4.1-5">ADD_ADDRESS frames are ack-eliciting. When lost, they <span class="bcp14">SHOULD</span> be retransmitted,
+unless the address is not active anymore.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.1-6">This frame is only sent from the server to the client. Servers <span class="bcp14">MUST</span> treat
+receipt of an ADD_ADDRESS frame as a connection error of type
+PROTOCOL_VIOLATION.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="removeaddress">
+<section id="section-4.2">
+        <h3 id="name-remove_address">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-remove_address" class="section-name selfRef">REMOVE_ADDRESS</a>
+        </h3>
+<p id="section-4.2-1">As per <span>[<a href="#SEEMANN-QNT" class="cite xref">SEEMANN-QNT</a>]</span>, but with different codepoints:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.2-2">
+<pre>
+REMOVE_ADDRESS Frame {
+    Type (i) = 0x3d7f94,
+    Sequence Number (i),
+}
+</pre><a href="#section-4.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2-3">The REMOVE_ADDRESS frame contains the following fields:<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.2-4">
+          <dt id="section-4.2-4.1">Sequence Number:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-4.2">
+            <p id="section-4.2-4.2.1">A variable-length integer encoding the sequence number of the address
+ advertisement to be removed.<a href="#section-4.2-4.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-4.2-5">REMOVE_ADDRESS frames are ack-eliciting. When lost, they <span class="bcp14">SHOULD</span> be
+retransmitted.<a href="#section-4.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.2-6">This frame is only sent from the server to the client. Servers <span class="bcp14">MUST</span> treat
+receipt of an REMOVE_ADDRESS frame as a connection error of type
+PROTOCOL_VIOLATION.<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="reachout">
+<section id="section-4.3">
+        <h3 id="name-reach_out">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-reach_out" class="section-name selfRef">REACH_OUT</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-4.3-1">
+<pre>
+REACH_OUT Frame {
+    Type (i) = 0x3d7f92..0x3d7f93,
+    round (i),
+    [ IPv4 (32) ],
+    [ IPv6 (128) ],
+    Port (16),
+}
+</pre><a href="#section-4.3-1" class="pilcrow">¶</a>
+</div>
+<p id="section-4.3-2">The REACH_OUT frame contains the following fields:<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.3-3">
+          <dt id="section-4.3-3.1">Round:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.2">
+            <p id="section-4.3-3.2.1">The sequence number of the NAT Traversal attempt.<a href="#section-4.3-3.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.3">IPv4:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.4">
+            <p id="section-4.3-3.4.1">The IPv4 address. Only present if the least significant bit of the frame type
+ is 0.<a href="#section-4.3-3.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.5">IPv6:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.6">
+            <p id="section-4.3-3.6.1">The IPv6 address. Only present if the least significant bit of the frame type
+ is 1.<a href="#section-4.3-3.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.3-3.7">Port:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.3-3.8">
+            <p id="section-4.3-3.8.1">The port number.<a href="#section-4.3-3.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-4.3-4">REACH_OUT frames are ack-eliciting.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
+<p id="section-4.3-5">This frame is only sent from the client to the server. Clients <span class="bcp14">MUST</span> treat
+receipt of a REACH_OUT frame as a connection error of type
+PROTOCOL_VIOLATION.<a href="#section-4.3-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-5">
+      <h2 id="name-security-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-5-1">TODO Security<a href="#section-5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-2.1">
+          <p id="section-5-2.1.1">Both client and server send data to un-validated addresses provided by the peer,
+this should be subject to ani-amplification limits.<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-6">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">TODO codepoints need registering<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">
-<section id="section-5">
+<section id="section-7">
       <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="QUIC-ADDR-DISCOVERY">[QUIC-ADDR-DISCOVERY]</dt>
+      <dd>
+<span class="refAuthor">Seemann, M.</span> and <span class="refAuthor">C. Huitema</span>, <span class="refTitle">"QUIC Address Discovery"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-address-discovery-00</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-address-discovery-00">https://datatracker.ietf.org/doc/html/draft-ietf-quic-address-discovery-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="QUIC-MULTIPATH">[QUIC-MULTIPATH]</dt>
+      <dd>
+<span class="refAuthor">Liu, Y.</span>, <span class="refAuthor">Ma, Y.</span>, <span class="refAuthor">De Coninck, Q.</span>, <span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Huitema, C.</span>, and <span class="refAuthor">M. Kühlewind</span>, <span class="refTitle">"Managing multiple paths for a QUIC connection"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-multipath-21</span>, <time datetime="2026-03-17" class="refDate">17 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-multipath-21">https://datatracker.ietf.org/doc/html/draft-ietf-quic-multipath-21</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="QUIC-TRANSPORT">[QUIC-TRANSPORT]</dt>
+      <dd>
+<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
       <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SEEMANN-QNT">[SEEMANN-QNT]</dt>
+    <dd>
+<span class="refAuthor">Seemann, M.</span> and <span class="refAuthor">E. Kinnear</span>, <span class="refTitle">"Using QUIC to traverse NATs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-seemann-quic-nat-traversal-02</span>, <time datetime="2024-03-03" class="refDate">3 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-seemann-quic-nat-traversal-02">https://datatracker.ietf.org/doc/html/draft-seemann-quic-nat-traversal-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1237,11 +1568,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Floris Bruynooghe</span></div>
+<div dir="auto" class="left"><span class="org">n0 Inc.</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:flub@n0.computer" class="email">flub@n0.computer</a>
 </div>
 </address>
 </section>
