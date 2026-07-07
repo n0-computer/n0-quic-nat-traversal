@@ -35,6 +35,9 @@ keyword:
  - QUIC
  - NAT Traversal
  - hole punching
+venue:
+  github: "n0-computer/n0-quic-nat-traversal"
+  latest: "https://n0-computer.github.io/n0-quic-nat-traversal/draft-bruynooghe-n0-quic-nat-traversal.html"
 
 author:
  -
